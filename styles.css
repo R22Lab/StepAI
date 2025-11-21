@@ -23,6 +23,44 @@ body {
     margin: 0 auto;
 }
 
+/* What You'll Learn Section */
+.details {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    border: 1px solid #eee;
+    background-color: #fafafa;
+}
+
+.details h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.details ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.details li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.details li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #000;
+    font-weight: bold;
+}
+
+.details li:last-child {
+    border-bottom: none;
+}
+
 header {
     text-align: center;
     margin-bottom: 3rem;
@@ -97,10 +135,16 @@ header p {
     font-family: inherit;
 }
 
+.form-group input,
+.form-group select {
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
     border-color: #666;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
 button {
@@ -117,6 +161,111 @@ button {
 }
 
 button:hover {
+    background-color: #333;
+}
+
+/* Form validation styles */
+.form-group.error input,
+.form-group.error select {
+    border-color: #ff0000;
+}
+
+.form-group.success input,
+.form-group.success select {
+    border-color: #00aa00;
+}
+
+.form-error-message {
+    color: #ff0000;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+    display: none;
+}
+
+/* Loading animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+button:disabled {
+    position: relative;
+    pointer-events: none;
+}
+
+button:disabled::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+/* Overlay styles */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay-content {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 4px;
+    text-align: center;
+    max-width: 90%;
+    width: 400px;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.overlay:not(.hidden) .overlay-content {
+    transform: translateY(0);
+}
+
+.overlay-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #000;
+}
+
+.overlay-content p {
+    margin-bottom: 1.5rem;
+    color: #444;
+}
+
+#close-overlay {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#close-overlay:hover {
     background-color: #333;
 }
 
@@ -148,7 +297,17 @@ footer {
         font-size: 1rem;
     }
     
+    .details {
+        padding: 1rem;
+    }
+    
     .booking {
+        padding: 1.5rem;
+    }
+    
+    .overlay-content {
+        width: 90%;
+        margin: 0 1rem;
         padding: 1.5rem;
     }
 }
