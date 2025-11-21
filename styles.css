@@ -1,4 +1,4 @@
-/* Modern Minimalist Black & White Design */
+/* Modern Premium Design with Montserrat */
 * {
     margin: 0;
     padding: 0;
@@ -6,180 +6,281 @@
 }
 
 body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    line-height: 1.6;
-    color: #000;
-    background-color: #fff;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.7;
+    color: #2c3e50;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
 
 .container {
-    max-width: 600px;
-    width: 90%;
+    max-width: 800px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
     padding: 2rem;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-top: 1rem;
+    position: relative;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    border-radius: 2px;
+}
+
+header h1 {
+    font-size: 3rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #3498db, #2ecc71);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+}
+
+header p {
+    font-size: 1.3rem;
+    color: #7f8c8d;
+    font-weight: 400;
+    margin-top: 0.5rem;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(46, 204, 113, 0.1));
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    color: #2c3e50;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    color: #34495e;
+    font-weight: 400;
+    max-width: 600px;
     margin: 0 auto;
 }
 
 /* What You'll Learn Section */
 .details {
-    margin: 2rem 0;
-    padding: 1.5rem;
-    border: 1px solid #eee;
-    background-color: #fafafa;
+    margin: 3rem 0;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(52, 152, 219, 0.1);
 }
 
 .details h3 {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-    font-weight: 500;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    text-align: center;
+    position: relative;
+}
+
+.details h3::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    border-radius: 2px;
 }
 
 .details ul {
     list-style: none;
     padding-left: 0;
+    display: grid;
+    gap: 1.2rem;
 }
 
 .details li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #eee;
-    padding-left: 1.5rem;
+    padding: 1rem;
+    border-radius: 10px;
+    background: rgba(52, 152, 219, 0.05);
     position: relative;
+    padding-left: 2.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.details li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    background: rgba(52, 152, 219, 0.1);
 }
 
 .details li:before {
-    content: "•";
+    content: "✓";
     position: absolute;
-    left: 0;
-    color: #000;
+    left: 1rem;
+    color: #27ae60;
     font-weight: bold;
-}
-
-.details li:last-child {
-    border-bottom: none;
-}
-
-header {
-    text-align: center;
-    margin-bottom: 3rem;
-    padding-top: 1rem;
-}
-
-header h1 {
-    font-size: 2.5rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-    font-weight: 300;
-}
-
-header p {
-    font-size: 1.1rem;
-    color: #666;
-    font-weight: 300;
-}
-
-.hero {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.hero h2 {
-    font-size: 2rem;
-    font-weight: 400;
-    margin-bottom: 1rem;
-    line-height: 1.3;
-}
-
-.hero p {
     font-size: 1.2rem;
-    color: #444;
-    font-weight: 300;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
+/* Booking Section */
 .booking {
-    background-color: #f8f8f8;
-    padding: 2rem;
-    border: 1px solid #ddd;
+    background: linear-gradient(135deg, #3498db, #2ecc71);
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(52, 152, 219, 0.3);
 }
 
 .booking h3 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     margin-bottom: 1.5rem;
-    font-weight: 400;
+    font-weight: 600;
     text-align: center;
+    color: white;
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
+    position: relative;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    font-size: 1rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .form-group input,
 .form-group select {
     width: 100%;
-    padding: 0.8rem;
-    border: 1px solid #000;
-    background-color: #fff;
-    font-size: 1rem;
-    font-family: inherit;
+    padding: 1rem 1.2rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.2);
+    font-size: 1.1rem;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 10px;
+    color: white;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
 }
 
-.form-group input,
-.form-group select {
-    transition: border-color 0.3s, box-shadow 0.3s;
+.form-group input::placeholder,
+.form-group select option {
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
-    border-color: #666;
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+.form-group input:-webkit-autofill,
+.form-group input:-webkit-autofill:hover,
+.form-group input:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.2) inset;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 button {
     width: 100%;
-    padding: 1rem;
-    background-color: #000;
-    color: #fff;
+    padding: 1.2rem;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
     border: none;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 button:hover {
-    background-color: #333;
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 }
 
 /* Form validation styles */
 .form-group.error input,
 .form-group.error select {
-    border-color: #ff0000;
+    border-color: #e74c3c !important;
+    background-color: rgba(231, 76, 60, 0.1) !important;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2) !important;
 }
 
 .form-group.success input,
 .form-group.success select {
-    border-color: #00aa00;
+    border-color: #27ae60 !important;
+    background-color: rgba(39, 174, 96, 0.1) !important;
+    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2) !important;
 }
 
 .form-error-message {
-    color: #ff0000;
-    font-size: 0.85rem;
-    margin-top: 0.3rem;
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
     display: none;
+    font-weight: 500;
+    text-align: left;
+    padding-left: 0.5rem;
 }
 
 /* Loading animation */
@@ -191,6 +292,7 @@ button:hover {
 button:disabled {
     position: relative;
     pointer-events: none;
+    opacity: 0.7;
 }
 
 button:disabled::after {
@@ -202,7 +304,7 @@ button:disabled::after {
     left: 50%;
     margin-left: -8px;
     margin-top: -8px;
-    border: 2px solid #ffffff;
+    border: 2px solid white;
     border-radius: 50%;
     border-top-color: transparent;
     animation: spin 1s linear infinite;
@@ -215,13 +317,14 @@ button:disabled::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.8), rgba(46, 204, 113, 0.8));
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
     opacity: 1;
     transition: opacity 0.3s ease;
+    backdrop-filter: blur(5px);
 }
 
 .overlay.hidden {
@@ -230,14 +333,16 @@ button:disabled::after {
 }
 
 .overlay-content {
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 4px;
+    background: white;
+    padding: 2.5rem;
+    border-radius: 15px;
     text-align: center;
     max-width: 90%;
-    width: 400px;
+    width: 450px;
     transform: translateY(20px);
     transition: transform 0.3s ease;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(52, 152, 219, 0.1);
 }
 
 .overlay:not(.hidden) .overlay-content {
@@ -245,69 +350,143 @@ button:disabled::after {
 }
 
 .overlay-content h3 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     margin-bottom: 1rem;
-    color: #000;
+    color: #2c3e50;
+    font-weight: 700;
+    background: linear-gradient(135deg, #3498db, #2ecc71);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .overlay-content p {
     margin-bottom: 1.5rem;
-    color: #444;
+    color: #34495e;
+    font-size: 1.1rem;
+    line-height: 1.6;
 }
 
 #close-overlay {
-    background-color: #000;
-    color: #fff;
+    background: linear-gradient(135deg, #3498db, #2ecc71);
+    color: white;
     border: none;
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.9rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
 }
 
 #close-overlay:hover {
-    background-color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+    background: linear-gradient(135deg, #2ecc71, #3498db);
 }
 
 footer {
     text-align: center;
     margin-top: 3rem;
-    padding-top: 1rem;
-    border-top: 1px solid #eee;
-    color: #888;
-    font-size: 0.9rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(52, 152, 219, 0.2);
+    color: #7f8c8d;
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
     .container {
-        width: 95%;
-        padding: 1rem;
+        padding: 1.5rem;
+        border-radius: 15px;
     }
     
     header h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
+    }
+    
+    header p {
+        font-size: 1.1rem;
     }
     
     .hero h2 {
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
     
     .hero p {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
     
     .details {
-        padding: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .details h3 {
+        font-size: 1.5rem;
     }
     
     .booking {
-        padding: 1.5rem;
+        padding: 1.8rem;
+    }
+    
+    .booking h3 {
+        font-size: 1.5rem;
     }
     
     .overlay-content {
         width: 90%;
         margin: 0 1rem;
-        padding: 1.5rem;
+        padding: 2rem;
+    }
+    
+    .overlay-content h3 {
+        font-size: 1.5rem;
+    }
+    
+    .details ul {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-group input,
+    .form-group select {
+        font-size: 1rem;
+        padding: 0.9rem 1rem;
+    }
+    
+    button {
+        padding: 1rem;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero h2 {
+        font-size: 1.7rem;
+    }
+    
+    .details h3 {
+        font-size: 1.4rem;
+    }
+    
+    .booking h3 {
+        font-size: 1.4rem;
+    }
+    
+    .overlay-content {
+        padding: 1.8rem;
+    }
+    
+    .overlay-content h3 {
+        font-size: 1.4rem;
     }
 }
