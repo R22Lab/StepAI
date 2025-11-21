@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
         switch(fieldId) {
             case 'name':
                 if (value.trim().length < 2) {
-                    showError(field, formGroup, errorElement, 'Name must be at least 2 characters');
+                    showError(field, formGroup, errorElement, 'Имя должно содержать не менее 2 символов');
                     return false;
                 }
                 break;
@@ -111,13 +111,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Show loading state
             const submitButton = form.querySelector('button[type="submit"]');
             const originalText = submitButton.textContent;
-            submitButton.textContent = 'Processing...';
+            submitButton.textContent = 'Обработка...';
             submitButton.disabled = true;
             
             // Simulate API call delay
             setTimeout(() => {
                 // Show success overlay
-                confirmationMessage.textContent = `Thank you, ${name}! Your booking for ${formatDate(date)} at ${formatTime(time)} has been received. We'll contact you shortly to confirm.`;
+                confirmationMessage.textContent = `Спасибо, ${name}! Ваше бронирование на ${formatDate(date)} в ${formatTime(time)} получено. Мы свяжемся с вами в ближайшее время для подтверждения.`;
                 overlay.classList.remove('hidden');
                 
                 // Reset form
@@ -162,8 +162,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function formatTime(timeString) {
         const [hours, minutes] = timeString.split(':');
         const hour = parseInt(hours, 10);
-        const period = hour >= 12 ? 'PM' : 'AM';
-        const displayHour = hour % 12 || 12;
-        return `${displayHour}:${minutes} ${period}`;
+        return `${hour}:${minutes}`;
     }
 });
