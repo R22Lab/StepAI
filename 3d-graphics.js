@@ -41,25 +41,31 @@ function init3D() {
 }
 
 function createAISpheres() {
-    const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+    const sphereGeometry = new THREE.SphereGeometry(0.6, 32, 32);
     const materials = [
-        new THREE.MeshPhongMaterial({ color: 0x000000, transparent: true, opacity: 0.7 }),
-        new THREE.MeshPhongMaterial({ color: 0x333333, transparent: true, opacity: 0.7 }),
-        new THREE.MeshPhongMaterial({ color: 0x666666, transparent: true, opacity: 0.7 })
+        new THREE.MeshPhongMaterial({ color: 0x3498db, transparent: true, opacity: 0.8, shininess: 100 }),
+        new THREE.MeshPhongMaterial({ color: 0x2ecc71, transparent: true, opacity: 0.8, shininess: 100 }),
+        new THREE.MeshPhongMaterial({ color: 0x9b59b6, transparent: true, opacity: 0.8, shininess: 100 }),
+        new THREE.MeshPhongMaterial({ color: 0xe74c3c, transparent: true, opacity: 0.8, shininess: 100 }),
+        new THREE.MeshPhongMaterial({ color: 0xf39c12, transparent: true, opacity: 0.8, shininess: 100 })
     ];
 
     for (let i = 0; i < 5; i++) {
         const material = materials[i % materials.length];
         const sphere = new THREE.Mesh(sphereGeometry, material);
         
-        // Position spheres in a circular pattern
+        // Position spheres in a more dynamic pattern
         const angle = (i / 5) * Math.PI * 2;
-        sphere.position.x = Math.cos(angle) * 2;
-        sphere.position.y = Math.sin(angle) * 1;
-        sphere.position.z = Math.sin(angle * 2) * 0.5;
+        sphere.position.x = Math.cos(angle) * 2.5;
+        sphere.position.y = Math.sin(angle * 1.5) * 1.5;
+        sphere.position.z = Math.sin(angle * 2) * 1;
         
-        // Add subtle rotation
-        sphere.userData = { rotationSpeed: { x: 0.005, y: 0.008, z: 0.003 } };
+        // Add pulsing effect
+        sphere.userData = { 
+            rotationSpeed: { x: 0.005, y: 0.008, z: 0.003 },
+            originalScale: sphere.scale.clone(),
+            pulseDirection: 1
+        };
         
         scene.add(sphere);
         aiSpheres.push(sphere);
@@ -70,9 +76,9 @@ function createFloatingElements(container) {
     const elementsContainer = document.createElement('div');
     elementsContainer.className = 'ai-elements';
     
-    const elements = ['🤖', '🧠', '💻', '📡', '⚡', '🔮'];
+    const elements = ['🤖', '🧠', '💻', '📡', '⚡', '🌐', '🔍', '💡', '📊', '云端'];
     
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 10; i++) {
         const element = document.createElement('div');
         element.className = 'ai-element';
         element.textContent = elements[i % elements.length];
@@ -80,7 +86,8 @@ function createFloatingElements(container) {
         // Random position
         element.style.left = `${Math.random() * 80 + 10}%`;
         element.style.top = `${Math.random() * 70 + 15}%`;
-        element.style.animationDelay = `${Math.random() * 5}s`;
+        element.style.animationDelay = `${Math.random() * 8}s`;
+        element.style.fontSize = `${Math.random() * 1 + 2}rem`;
         
         elementsContainer.appendChild(element);
     }
@@ -100,14 +107,27 @@ function onWindowResize() {
 function animate() {
     requestAnimationFrame(animate);
     
-    // Rotate spheres
+    // Get time for animations
+    const time = Date.now() * 0.001;
+    
+    // Rotate and pulse spheres
     aiSpheres.forEach(sphere => {
+        // Rotation
         sphere.rotation.x += sphere.userData.rotationSpeed.x;
         sphere.rotation.y += sphere.userData.rotationSpeed.y;
         sphere.rotation.z += sphere.userData.rotationSpeed.z;
         
-        // Add floating motion
-        sphere.position.y += Math.sin(Date.now() * 0.001 + sphere.position.x) * 0.001;
+        // Pulsing effect
+        const pulse = Math.sin(time * 2) * 0.1 + 1;
+        sphere.scale.set(
+            sphere.userData.originalScale.x * pulse,
+            sphere.userData.originalScale.y * pulse,
+            sphere.userData.originalScale.z * pulse
+        );
+        
+        // Floating motion
+        sphere.position.y += Math.sin(time + sphere.position.x) * 0.002;
+        sphere.position.x += Math.cos(time + sphere.position.y) * 0.001;
     });
     
     renderer.render(scene, camera);
