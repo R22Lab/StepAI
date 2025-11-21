@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Intensive | 4-Hour Deep Dive</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
 </head>
 <body>
     <div class="container">
@@ -19,27 +20,41 @@
                 <p>In just 4 hours, gain practical insights and hands-on experience with cutting-edge AI technologies.</p>
             </section>
             
+            <section class="details">
+                <h3>What You'll Learn</h3>
+                <ul>
+                    <li>Foundational AI concepts and terminology</li>
+                    <li>Hands-on experience with AI tools and platforms</li>
+                    <li>Real-world applications and use cases</li>
+                    <li>Ethical considerations in AI development</li>
+                    <li>Future trends and opportunities</li>
+                </ul>
+            </section>
+            
             <section class="booking">
                 <h3>Reserve Your Spot</h3>
                 <form id="booking-form">
                     <div class="form-group">
                         <label for="name">Full Name</label>
-                        <input type="text" id="name" required>
+                        <input type="text" id="name" required aria-describedby="name-error">
+                        <span id="name-error" class="form-error-message">Please enter your full name</span>
                     </div>
                     
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" required>
+                        <input type="email" id="email" required aria-describedby="email-error">
+                        <span id="email-error" class="form-error-message">Please enter a valid email address</span>
                     </div>
                     
                     <div class="form-group">
                         <label for="date">Preferred Date</label>
-                        <input type="date" id="date" required>
+                        <input type="date" id="date" required aria-describedby="date-error">
+                        <span id="date-error" class="form-error-message">Please select a date</span>
                     </div>
                     
                     <div class="form-group">
                         <label for="time">Preferred Time</label>
-                        <select id="time" required>
+                        <select id="time" required aria-describedby="time-error">
                             <option value="">Select a time</option>
                             <option value="09:00">9:00 AM</option>
                             <option value="10:00">10:00 AM</option>
@@ -48,12 +63,21 @@
                             <option value="15:00">3:00 PM</option>
                             <option value="16:00">4:00 PM</option>
                         </select>
+                        <span id="time-error" class="form-error-message">Please select a time</span>
                     </div>
                     
                     <button type="submit">Book Now</button>
                 </form>
             </section>
         </main>
+        
+        <div id="success-overlay" class="overlay hidden">
+            <div class="overlay-content">
+                <h3>Booking Confirmed!</h3>
+                <p id="confirmation-message">Thank you! Your booking has been received. We'll contact you shortly to confirm.</p>
+                <button id="close-overlay">Close</button>
+            </div>
+        </div>
         
         <footer>
             <p>&copy; 2025 AI Intensive. All rights reserved.</p>
