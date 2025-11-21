@@ -1,4 +1,4 @@
-// 3D Graphics with Three.js
+// 3D Graphics with Three.js for Telegram Mini App
 let scene, camera, renderer, aiSpheres = [];
 
 function init3D() {
@@ -7,7 +7,7 @@ function init3D() {
 
     // Create scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xfafafa);
+    scene.background = new THREE.Color(0xffffff);
 
     // Create camera
     camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
@@ -50,15 +50,15 @@ function createAISpheres() {
         new THREE.MeshPhongMaterial({ color: 0xf39c12, transparent: true, opacity: 0.8, shininess: 100 })
     ];
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 3; i++) {  // Reduced number of spheres for better performance on mobile
         const material = materials[i % materials.length];
         const sphere = new THREE.Mesh(sphereGeometry, material);
         
         // Position spheres in a more dynamic pattern
-        const angle = (i / 5) * Math.PI * 2;
-        sphere.position.x = Math.cos(angle) * 2.5;
-        sphere.position.y = Math.sin(angle * 1.5) * 1.5;
-        sphere.position.z = Math.sin(angle * 2) * 1;
+        const angle = (i / 3) * Math.PI * 2;
+        sphere.position.x = Math.cos(angle) * 2;
+        sphere.position.y = Math.sin(angle * 1.5) * 0.8;
+        sphere.position.z = Math.sin(angle * 2) * 0.5;
         
         // Add pulsing effect
         sphere.userData = { 
@@ -78,7 +78,7 @@ function createFloatingElements(container) {
     
     const elements = ['🤖', '🧠', '💻', '📡', '⚡', '🌐', '🔍', '💡', '📊', '云端'];
     
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 6; i++) {  // Reduced number of elements for better performance
         const element = document.createElement('div');
         element.className = 'ai-element';
         element.textContent = elements[i % elements.length];
@@ -87,7 +87,7 @@ function createFloatingElements(container) {
         element.style.left = `${Math.random() * 80 + 10}%`;
         element.style.top = `${Math.random() * 70 + 15}%`;
         element.style.animationDelay = `${Math.random() * 8}s`;
-        element.style.fontSize = `${Math.random() * 1 + 2}rem`;
+        element.style.fontSize = `${Math.random() * 0.8 + 1.5}rem`;
         
         elementsContainer.appendChild(element);
     }
@@ -151,13 +151,21 @@ function loadThreeJS() {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    loadThreeJS()
-        .then(init3D)
-        .catch(err => {
-            console.error('Failed to load Three.js:', err);
-            // Fallback: create a simple 3D-like effect with CSS
-            createCSS3DEffect();
-        });
+    // Check if we're in Telegram Web App
+    if (window.Telegram?.WebApp) {
+        // Initialize after Telegram Web App is ready
+        window.Telegram.WebApp.ready();
+        init3D();
+    } else {
+        // Initialize normally for non-Telegram environments
+        loadThreeJS()
+            .then(init3D)
+            .catch(err => {
+                console.error('Failed to load Three.js:', err);
+                // Fallback: create a simple 3D-like effect with CSS
+                createCSS3DEffect();
+            });
+    }
 });
 
 // Fallback CSS 3D effect if Three.js fails to load
@@ -171,8 +179,8 @@ function createCSS3DEffect() {
     fallbackDiv.style.display = 'flex';
     fallbackDiv.style.alignItems = 'center';
     fallbackDiv.style.justifyContent = 'center';
-    fallbackDiv.style.fontSize = '5rem';
-    fallbackDiv.style.color = '#666';
+    fallbackDiv.style.fontSize = '4rem';
+    fallbackDiv.style.color = '#3498db';
     fallbackDiv.style.animation = 'pulse 2s infinite';
     fallbackDiv.innerHTML = '🤖';
     

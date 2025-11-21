@@ -1,0 +1,27 @@
+{
+  "name": "ai-intensive-booking-telegram-mini-app",
+  "version": "1.0.0",
+  "description": "A modern, mobile-optimized website for booking a 4-hour AI intensive, specifically designed for use as a Telegram Mini App.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "telegram",
+    "mini-app",
+    "booking",
+    "ai",
+    "javascript",
+    "html",
+    "css"
+  ],
+  "author": "AI Intensive Booking App",
+  "license": "MIT"
+}
