@@ -1,1 +1,4 @@
-Nothing should be ignored based on the provided file changes, as they only include source files (.css, .js, .html, .md) and no build artifacts, dependencies, or temporary files.
+```
+node_modules/
+package-lock.json
+```

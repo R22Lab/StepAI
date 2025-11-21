@@ -1,8 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Telegram Web App
+    let tg = window.Telegram?.WebApp;
+    
+    // Expand the web app to full height
+    if(tg) {
+        tg.expand();
+        tg.setHeaderColor('#3498db');
+        tg.setBackgroundColor('#ffffff');
+        
+        // Set up main button
+        tg.MainButton.setText('Забронировать');
+        tg.MainButton.show();
+        
+        // Add theme change listener
+        tg.onEvent('themeChanged', function() {
+            // Update header color if theme changes
+            tg.setHeaderColor('#3498db');
+        });
+    }
+
     const form = document.getElementById('booking-form');
     const overlay = document.getElementById('success-overlay');
     const closeOverlay = document.getElementById('close-overlay');
     const confirmationMessage = document.getElementById('confirmation-message');
+    const submitBtn = document.getElementById('submit-btn');
     
     // Set minimum date to today
     const today = new Date().toISOString().split('T')[0];
@@ -67,6 +88,11 @@ document.addEventListener('DOMContentLoaded', function() {
             errorElement.textContent = customMessage;
         }
         field.setAttribute('aria-invalid', 'true');
+        
+        // If using Telegram Web App, show alert
+        if(window.Telegram?.WebApp) {
+            window.Telegram.WebApp.showAlert(errorElement.textContent);
+        }
     }
     
     function showSuccess(field, formGroup) {
@@ -109,10 +135,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (isNameValid && isEmailValid && isDateValid && isTimeValid) {
             // Show loading state
-            const submitButton = form.querySelector('button[type="submit"]');
-            const originalText = submitButton.textContent;
-            submitButton.textContent = 'Обработка...';
-            submitButton.disabled = true;
+            if(tg) {
+                tg.MainButton.setText('Обработка...');
+                tg.MainButton.disable();
+            }
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Обработка...';
+            submitBtn.disabled = true;
             
             // Simulate API call delay
             setTimeout(() => {
@@ -124,8 +153,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 form.reset();
                 
                 // Remove loading state
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                
+                if(tg) {
+                    tg.MainButton.setText('Забронировать');
+                    tg.MainButton.enable();
+                    
+                    // Update main button to close the web app after booking
+                    tg.MainButton.setText('Закрыть');
+                    tg.MainButton.offClick(handleMainButtonClick);
+                    tg.MainButton.onClick(() => {
+                        tg.close();
+                    });
+                }
                 
                 // Remove validation classes
                 document.querySelectorAll('.form-group').forEach(group => {
@@ -140,15 +181,44 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Handle main button click for Telegram
+    function handleMainButtonClick() {
+        form.dispatchEvent(new Event('submit'));
+    }
+    
+    if(tg) {
+        tg.MainButton.onClick(handleMainButtonClick);
+    }
+    
     // Close overlay
     closeOverlay.addEventListener('click', function() {
         overlay.classList.add('hidden');
+        
+        if(tg) {
+            // Restore main button functionality
+            tg.MainButton.setText('Забронировать');
+            tg.MainButton.offClick(() => {
+                tg.close();
+            });
+            tg.MainButton.onClick(handleMainButtonClick);
+            tg.MainButton.enable();
+        }
     });
     
     // Close overlay when clicking outside the content
     overlay.addEventListener('click', function(e) {
         if (e.target === overlay) {
             overlay.classList.add('hidden');
+            
+            if(tg) {
+                // Restore main button functionality
+                tg.MainButton.setText('Забронировать');
+                tg.MainButton.offClick(() => {
+                    tg.close();
+                });
+                tg.MainButton.onClick(handleMainButtonClick);
+                tg.MainButton.enable();
+            }
         }
     });
     
