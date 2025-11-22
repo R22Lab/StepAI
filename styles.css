@@ -103,6 +103,111 @@ body {
     opacity: 0.9;
 }
 
+/* Intensive Info Section */
+.intensive-info {
+    text-align: center;
+    margin: 2rem 0;
+    padding: 2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(92, 107, 192, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.intensive-info:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.intensive-info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3949ab, #5c6bc0, #3949ab);
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+}
+
+.intensive-info h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+    color: #1a237e;
+    position: relative;
+    z-index: 2;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(92, 107, 192, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.info-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3949ab, #5c6bc0);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    background: rgba(92, 107, 192, 0.08);
+    border-color: rgba(92, 107, 192, 0.3);
+}
+
+.info-card:hover::before {
+    transform: scaleX(1);
+}
+
+.info-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.info-card h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1a237e;
+    margin-bottom: 0.5rem;
+}
+
+.info-card p {
+    font-size: 1rem;
+    color: #546e7a;
+    margin: 0;
+    line-height: 1.5;
+}
+
 /* Hero Section */
 .hero {
     text-align: center;
@@ -419,28 +524,98 @@ button:disabled {
     100% { transform: rotate(360deg); }
 }
 
-button:disabled {
+/* Pulse animation for interactive elements */
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(57, 73, 171, 0.4); }
+    70% { transform: scale(1.02); box-shadow: 0 0 0 12px rgba(57, 73, 171, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(57, 73, 171, 0); }
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+/* Bounce animation for icons */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-20px);}
+    60% {transform: translateY(-10px);}
+}
+
+.bounce-animation {
+    animation: bounce 2s infinite;
+}
+
+/* Slide in animations */
+@keyframes slideInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slide-in-up {
+    animation: slideInUp 0.6s ease-out;
+}
+
+.slide-in-down {
+    animation: slideInDown 0.6s ease-out;
+}
+
+/* Parallax effect for background */
+.parallax-bg {
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Interactive hover effects for list items */
+.details li {
+    cursor: pointer;
+}
+
+.details li:active {
+    transform: scale(0.98);
+}
+
+/* Enhanced button ripple effect */
+button {
     position: relative;
-    pointer-events: none;
-    opacity: 0.7;
+    overflow: hidden;
 }
 
-button:disabled::after {
-    content: '';
+.ripple {
     position: absolute;
-    width: 16px;
-    height: 16px;
-    top: 50%;
-    left: 50%;
-    margin-left: -8px;
-    margin-top: -8px;
-    border: 2px solid white;
     border-radius: 50%;
-    border-top-color: transparent;
-    animation: spin 1s linear infinite;
+    background-color: rgba(255, 255, 255, 0.7);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
 }
 
-/* Overlay styles */
+@keyframes ripple {
+    to {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+/* Responsive design */
 .overlay {
     position: fixed;
     top: 0;

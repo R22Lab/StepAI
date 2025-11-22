@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="3d-graphics.css">
+
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
     <!-- Telegram Web Apps SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -31,8 +31,26 @@
                     <h2>Преобразите свое понимание ИИ</h2>
                     <p>Всего за 4 часа получите практические знания и опыт работы с передовыми технологиями искусственного интеллекта.</p>
                     
-                    <!-- 3D Graphics Section -->
-                    <div class="threejs-container"></div>
+                    <section class="intensive-info">
+                        <h3>ИНТЕНСИВ ПО ИИ</h3>
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <div class="info-icon">📅</div>
+                                <h4>Дата</h4>
+                                <p>29 ноября 2025</p>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-icon">⏰</div>
+                                <h4>Время</h4>
+                                <p>12:00 - 16:30</p>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-icon">📍</div>
+                                <h4>Адрес</h4>
+                                <p>ул. Беговая, 12<br>(технопарк РГСУ)</p>
+                            </div>
+                        </div>
+                    </section>
                 </section>
                 
                 <section class="details">
@@ -71,9 +89,8 @@
                             <label for="time">Предпочтительное время</label>
                             <select id="time" required aria-describedby="time-error">
                                 <option value="">Выберите время</option>
-                                <option value="09:00">9:00</option>
-                                <option value="10:00">10:00</option>
-                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
                                 <option value="14:00">14:00</option>
                                 <option value="15:00">15:00</option>
                                 <option value="16:00">16:00</option>
@@ -98,6 +115,6 @@
     
     <script src="sheets-client.js"></script>
     <script src="script.js"></script>
-    <script src="3d-graphics.js"></script>
+
 </body>
 </html>
