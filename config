@@ -1,0 +1,10 @@
+{
+  "googleSheets": {
+    "spreadsheetId": "1R-8ekalS1cWW4PV2wQmwwLgDL9e-slFldLp3VRvkdyw",
+    "apiKey": "YOUR_GOOGLE_API_KEY", 
+    "sheetIds": {
+      "registrations": 0,
+      "users": 1091838685
+    }
+  }
+}

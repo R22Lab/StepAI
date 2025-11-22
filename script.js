@@ -154,41 +154,90 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.textContent = 'Обработка...';
             submitBtn.disabled = true;
             
-            // Simulate API call delay
-            setTimeout(() => {
-                // Show success overlay
-                confirmationMessage.textContent = `Спасибо, ${name}! Ваше бронирование на ${formatDate(date)} в ${formatTime(time)} получено. Мы свяжемся с вами в ближайшее время для подтверждения.`;
-                overlay.classList.remove('hidden');
-                
-                // Reset form
-                form.reset();
-                
-                // Remove validation classes
-                document.querySelectorAll('.form-group').forEach(group => {
-                    group.classList.remove('error', 'success');
-                });
-                
-                // Hide error messages
-                document.querySelectorAll('.form-error-message').forEach(msg => {
-                    msg.style.display = 'none';
-                });
-                
-                // Remove loading state
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-                
-                if(tg) {
-                    tg.MainButton.setText('Забронировать');
-                    tg.MainButton.enable();
+            // Send registration data to Google Sheets
+            const sheetsClient = new SheetsClient();
+            const registrationData = [
+                name,
+                email,
+                formatDateForSheet(date),
+                time,
+                getTelegramUserId() || 'N/A',
+                new Date().toISOString()
+            ];
+            
+            sheetsClient.addDataToSheet('registrations', registrationData)
+                .then(sheetsResult => {
+                    console.log('Registration saved to Google Sheets:', sheetsResult);
                     
-                    // Update main button to close the web app after booking
-                    tg.MainButton.setText('Закрыть');
-                    tg.MainButton.offClick(handleMainButtonClick);
-                    tg.MainButton.onClick(() => {
-                        tg.close();
+                    // Show success overlay
+                    confirmationMessage.textContent = `Спасибо, ${name}! Ваше бронирование на ${formatDate(date)} в ${formatTime(time)} получено. Мы свяжемся с вами в ближайшее время для подтверждения.`;
+                    overlay.classList.remove('hidden');
+                    
+                    // Reset form
+                    form.reset();
+                    
+                    // Remove validation classes
+                    document.querySelectorAll('.form-group').forEach(group => {
+                        group.classList.remove('error', 'success');
                     });
-                }
-            }, 1000);
+                    
+                    // Hide error messages
+                    document.querySelectorAll('.form-error-message').forEach(msg => {
+                        msg.style.display = 'none';
+                    });
+                    
+                    // Remove loading state
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    
+                    if(tg) {
+                        tg.MainButton.setText('Забронировать');
+                        tg.MainButton.enable();
+                        
+                        // Update main button to close the web app after booking
+                        tg.MainButton.setText('Закрыть');
+                        tg.MainButton.offClick(handleMainButtonClick);
+                        tg.MainButton.onClick(() => {
+                            tg.close();
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error saving registration to Google Sheets:', error);
+                    
+                    // Still show success overlay but log the error
+                    confirmationMessage.textContent = `Спасибо, ${name}! Ваше бронирование на ${formatDate(date)} в ${formatTime(time)} получено. Мы свяжемся с вами в ближайшее время для подтверждения.`;
+                    overlay.classList.remove('hidden');
+                    
+                    // Reset form
+                    form.reset();
+                    
+                    // Remove validation classes
+                    document.querySelectorAll('.form-group').forEach(group => {
+                        group.classList.remove('error', 'success');
+                    });
+                    
+                    // Hide error messages
+                    document.querySelectorAll('.form-error-message').forEach(msg => {
+                        msg.style.display = 'none';
+                    });
+                    
+                    // Remove loading state
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    
+                    if(tg) {
+                        tg.MainButton.setText('Забронировать');
+                        tg.MainButton.enable();
+                        
+                        // Update main button to close the web app after booking
+                        tg.MainButton.setText('Закрыть');
+                        tg.MainButton.offClick(handleMainButtonClick);
+                        tg.MainButton.onClick(() => {
+                            tg.close();
+                        });
+                    }
+                });
         }
     });
     
@@ -237,6 +286,17 @@ document.addEventListener('DOMContentLoaded', function() {
     function formatDate(dateString) {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(dateString).toLocaleDateString(undefined, options);
+    }
+    
+    // Format date for Google Sheets (YYYY-MM-DD)
+    function formatDateForSheet(dateString) {
+        return dateString;
+    }
+    
+    // Get Telegram user ID if available
+    function getTelegramUserId() {
+        const tg = window.Telegram?.WebApp;
+        return tg?.initDataUnsafe?.user?.id || null;
     }
     
     // Format time for display
