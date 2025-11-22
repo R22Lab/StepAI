@@ -1,5 +1,6 @@
 // 3D Graphics with Three.js for Telegram Mini App
 let scene, camera, renderer, aiSpheres = [];
+let clock = new THREE.Clock();
 
 function init3D() {
     const container = document.querySelector('.threejs-container');
@@ -7,7 +8,8 @@ function init3D() {
 
     // Create scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xffffff);
+    scene.background = new THREE.Color(0xf5f7fa);
+    scene.fog = new THREE.Fog(0xf5f7fa, 10, 20);
 
     // Create camera
     camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
@@ -17,6 +19,7 @@ function init3D() {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.shadowMap.enabled = true;
     container.appendChild(renderer.domElement);
 
     // Add lighting
@@ -25,7 +28,12 @@ function init3D() {
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
     directionalLight.position.set(1, 1, 1);
+    directionalLight.castShadow = true;
     scene.add(directionalLight);
+
+    const backLight = new THREE.DirectionalLight(0xffffff, 0.4);
+    backLight.position.set(-1, -1, -1);
+    scene.add(backLight);
 
     // Create AI-themed 3D objects
     createAISpheres();
@@ -43,16 +51,37 @@ function init3D() {
 function createAISpheres() {
     const sphereGeometry = new THREE.SphereGeometry(0.6, 32, 32);
     const materials = [
-        new THREE.MeshPhongMaterial({ color: 0x3498db, transparent: true, opacity: 0.8, shininess: 100 }),
-        new THREE.MeshPhongMaterial({ color: 0x2ecc71, transparent: true, opacity: 0.8, shininess: 100 }),
-        new THREE.MeshPhongMaterial({ color: 0x9b59b6, transparent: true, opacity: 0.8, shininess: 100 }),
-        new THREE.MeshPhongMaterial({ color: 0xe74c3c, transparent: true, opacity: 0.8, shininess: 100 }),
-        new THREE.MeshPhongMaterial({ color: 0xf39c12, transparent: true, opacity: 0.8, shininess: 100 })
+        new THREE.MeshPhongMaterial({ 
+            color: 0x3949ab, 
+            transparent: true, 
+            opacity: 0.9, 
+            shininess: 100,
+            emissive: 0x3949ab,
+            emissiveIntensity: 0.1
+        }),
+        new THREE.MeshPhongMaterial({ 
+            color: 0x5c6bc0, 
+            transparent: true, 
+            opacity: 0.9, 
+            shininess: 100,
+            emissive: 0x5c6bc0,
+            emissiveIntensity: 0.1
+        }),
+        new THREE.MeshPhongMaterial({ 
+            color: 0x7986cb, 
+            transparent: true, 
+            opacity: 0.9, 
+            shininess: 100,
+            emissive: 0x7986cb,
+            emissiveIntensity: 0.1
+        })
     ];
 
     for (let i = 0; i < 3; i++) {  // Reduced number of spheres for better performance on mobile
         const material = materials[i % materials.length];
         const sphere = new THREE.Mesh(sphereGeometry, material);
+        sphere.castShadow = true;
+        sphere.receiveShadow = true;
         
         // Position spheres in a more dynamic pattern
         const angle = (i / 3) * Math.PI * 2;
@@ -64,7 +93,8 @@ function createAISpheres() {
         sphere.userData = { 
             rotationSpeed: { x: 0.005, y: 0.008, z: 0.003 },
             originalScale: sphere.scale.clone(),
-            pulseDirection: 1
+            pulseDirection: 1,
+            floatOffset: { x: Math.random() * 0.5, y: Math.random() * 0.5 }
         };
         
         scene.add(sphere);
@@ -107,8 +137,8 @@ function onWindowResize() {
 function animate() {
     requestAnimationFrame(animate);
     
-    // Get time for animations
-    const time = Date.now() * 0.001;
+    const delta = clock.getDelta();
+    const elapsedTime = clock.getElapsedTime();
     
     // Rotate and pulse spheres
     aiSpheres.forEach(sphere => {
@@ -118,7 +148,7 @@ function animate() {
         sphere.rotation.z += sphere.userData.rotationSpeed.z;
         
         // Pulsing effect
-        const pulse = Math.sin(time * 2) * 0.1 + 1;
+        const pulse = Math.sin(elapsedTime * 2) * 0.1 + 1;
         sphere.scale.set(
             sphere.userData.originalScale.x * pulse,
             sphere.userData.originalScale.y * pulse,
@@ -126,8 +156,8 @@ function animate() {
         );
         
         // Floating motion
-        sphere.position.y += Math.sin(time + sphere.position.x) * 0.002;
-        sphere.position.x += Math.cos(time + sphere.position.y) * 0.001;
+        sphere.position.y += Math.sin(elapsedTime + sphere.position.x) * 0.002;
+        sphere.position.x += Math.cos(elapsedTime + sphere.position.y) * 0.001;
     });
     
     renderer.render(scene, camera);
@@ -180,7 +210,7 @@ function createCSS3DEffect() {
     fallbackDiv.style.alignItems = 'center';
     fallbackDiv.style.justifyContent = 'center';
     fallbackDiv.style.fontSize = '4rem';
-    fallbackDiv.style.color = '#3498db';
+    fallbackDiv.style.color = '#3949ab';
     fallbackDiv.style.animation = 'pulse 2s infinite';
     fallbackDiv.innerHTML = '🤖';
     

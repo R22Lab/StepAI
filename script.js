@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Expand the web app to full height
     if(tg) {
         tg.expand();
-        tg.setHeaderColor('#3498db');
-        tg.setBackgroundColor('#ffffff');
+        tg.setHeaderColor('#3949ab');
+        tg.setBackgroundColor('#f5f7fa');
         
         // Set up main button
         tg.MainButton.setText('Забронировать');
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add theme change listener
         tg.onEvent('themeChanged', function() {
             // Update header color if theme changes
-            tg.setHeaderColor('#3498db');
+            tg.setHeaderColor('#3949ab');
         });
     }
 
@@ -100,14 +100,25 @@ document.addEventListener('DOMContentLoaded', function() {
         field.setAttribute('aria-invalid', 'false');
     }
     
-    // Real-time validation
-    document.getElementById('name').addEventListener('blur', function() {
-        validateField('name', this.value);
-    });
+    // Real-time validation with debouncing
+    const debouncedValidation = {};
+    function debounce(func, timeout = 500) {
+        return (...args) => {
+            const previousCall = debouncedValidation[func.name];
+            if (previousCall) {
+                clearTimeout(previousCall);
+            }
+            debouncedValidation[func.name] = setTimeout(() => func.apply(this, args), timeout);
+        };
+    }
     
-    document.getElementById('email').addEventListener('blur', function() {
+    document.getElementById('name').addEventListener('input', debounce(function() {
+        validateField('name', this.value);
+    }, 500));
+    
+    document.getElementById('email').addEventListener('input', debounce(function() {
         validateField('email', this.value);
-    });
+    }, 500));
     
     document.getElementById('date').addEventListener('change', function() {
         validateField('date', this.value);
@@ -152,6 +163,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Reset form
                 form.reset();
                 
+                // Remove validation classes
+                document.querySelectorAll('.form-group').forEach(group => {
+                    group.classList.remove('error', 'success');
+                });
+                
+                // Hide error messages
+                document.querySelectorAll('.form-error-message').forEach(msg => {
+                    msg.style.display = 'none';
+                });
+                
                 // Remove loading state
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
@@ -167,16 +188,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         tg.close();
                     });
                 }
-                
-                // Remove validation classes
-                document.querySelectorAll('.form-group').forEach(group => {
-                    group.classList.remove('error', 'success');
-                });
-                
-                // Hide error messages
-                document.querySelectorAll('.form-error-message').forEach(msg => {
-                    msg.style.display = 'none';
-                });
             }, 1000);
         }
     });
@@ -234,4 +245,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const hour = parseInt(hours, 10);
         return `${hour}:${minutes}`;
     }
+    
+    // Add input field focus effects
+    const inputs = document.querySelectorAll('input, select');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        
+        input.addEventListener('blur', function() {
+            this.parentElement.classList.remove('focused');
+        });
+    });
 });
