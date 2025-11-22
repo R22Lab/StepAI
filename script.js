@@ -19,6 +19,53 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Add ripple effect to buttons
+    document.querySelectorAll('button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            // Remove any existing ripples
+            this.querySelectorAll('.ripple').forEach(ripple => ripple.remove());
+            
+            // Create ripple element
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            
+            // Position ripple at click location
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size/2;
+            const y = e.clientY - rect.top - size/2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            
+            this.appendChild(ripple);
+            
+            // Remove ripple after animation completes
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+
+    // Add animation to elements when they come into view
+    const observerOptions = {
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('slide-in-up');
+            }
+        });
+    }, observerOptions);
+
+    // Observe sections for animation
+    document.querySelectorAll('.intensive-info, .hero, .details, .booking').forEach(section => {
+        observer.observe(section);
+    });
+
     const form = document.getElementById('booking-form');
     const overlay = document.getElementById('success-overlay');
     const closeOverlay = document.getElementById('close-overlay');
@@ -35,7 +82,17 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('date').max = maxDate.toISOString().split('T')[0];
     
     // Available times for the AI intensive
-    const availableTimes = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'];
+    const availableTimes = ['12:00', '13:00', '14:00', '15:00', '16:00'];
+    
+    // Populate time dropdown with available times
+    const timeSelect = document.getElementById('time');
+    timeSelect.innerHTML = '<option value="">Выберите время</option>';
+    availableTimes.forEach(time => {
+        const option = document.createElement('option');
+        option.value = time;
+        option.textContent = time;
+        timeSelect.appendChild(option);
+    });
     
     // Form validation functions
     function validateField(fieldId, value) {
@@ -316,5 +373,10 @@ document.addEventListener('DOMContentLoaded', function() {
         input.addEventListener('blur', function() {
             this.parentElement.classList.remove('focused');
         });
+    });
+    
+    // Add bounce animation to info icons
+    document.querySelectorAll('.info-icon').forEach(icon => {
+        icon.classList.add('bounce-animation');
     });
 });
