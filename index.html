@@ -66,39 +66,81 @@
                 
                 <section class="booking">
                     <h3>Забронируйте свое место</h3>
+                    
+                    <!-- Progress bar -->
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <div class="progress-labels">
+                            <span class="progress-label active" id="label-name">Имя</span>
+                            <span class="progress-label" id="label-email">Email</span>
+                            <span class="progress-label" id="label-date">Дата</span>
+                            <span class="progress-label" id="label-time">Время</span>
+                        </div>
+                    </div>
+                    
                     <form id="booking-form">
                         <div class="form-group">
                             <label for="name">Полное имя</label>
-                            <input type="text" id="name" required aria-describedby="name-error">
+                            <div class="input-wrapper">
+                                <input type="text" id="name" required aria-describedby="name-error">
+                                <span class="validation-icon" id="name-valid-icon">✓</span>
+                                <span class="validation-icon invalid" id="name-invalid-icon">✕</span>
+                            </div>
                             <span id="name-error" class="form-error-message">Пожалуйста, введите ваше полное имя</span>
                         </div>
                         
                         <div class="form-group">
                             <label for="email">Электронная почта</label>
-                            <input type="email" id="email" required aria-describedby="email-error">
+                            <div class="input-wrapper">
+                                <input type="email" id="email" required aria-describedby="email-error">
+                                <span class="validation-icon" id="email-valid-icon">✓</span>
+                                <span class="validation-icon invalid" id="email-invalid-icon">✕</span>
+                            </div>
                             <span id="email-error" class="form-error-message">Пожалуйста, введите действительный адрес электронной почты</span>
                         </div>
                         
                         <div class="form-group">
                             <label for="date">Предпочтительная дата</label>
-                            <input type="date" id="date" required aria-describedby="date-error">
+                            <div class="input-wrapper">
+                                <input type="date" id="date" required aria-describedby="date-error">
+                                <span class="validation-icon" id="date-valid-icon">✓</span>
+                                <span class="validation-icon invalid" id="date-invalid-icon">✕</span>
+                            </div>
                             <span id="date-error" class="form-error-message">Пожалуйста, выберите дату</span>
                         </div>
                         
                         <div class="form-group">
                             <label for="time">Предпочтительное время</label>
-                            <select id="time" required aria-describedby="time-error">
-                                <option value="">Выберите время</option>
-                                <option value="12:00">12:00</option>
-                                <option value="13:00">13:00</option>
-                                <option value="14:00">14:00</option>
-                                <option value="15:00">15:00</option>
-                                <option value="16:00">16:00</option>
-                            </select>
+                            <div class="input-wrapper">
+                                <select id="time" required aria-describedby="time-error">
+                                    <option value="">Выберите время</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                </select>
+                                <span class="validation-icon" id="time-valid-icon">✓</span>
+                                <span class="validation-icon invalid" id="time-invalid-icon">✕</span>
+                            </div>
                             <span id="time-error" class="form-error-message">Пожалуйста, выберите время</span>
                         </div>
                         
-                        <button type="submit" id="submit-btn">Забронировать</button>
+                        <!-- Booking preview -->
+                        <div class="booking-preview" id="booking-preview">
+                            <h4>Ваше бронирование:</h4>
+                            <p><strong>Имя:</strong> <span id="preview-name">-</span></p>
+                            <p><strong>Email:</strong> <span id="preview-email">-</span></p>
+                            <p><strong>Дата:</strong> <span id="preview-date">-</span></p>
+                            <p><strong>Время:</strong> <span id="preview-time">-</span></p>
+                        </div>
+                        
+                        <button type="submit" id="submit-btn">
+                            <span class="btn-text">Забронировать</span>
+                            <span class="loading-spinner" id="loading-spinner"></span>
+                        </button>
                     </form>
                 </section>
             </main>
@@ -107,6 +149,7 @@
                 <div class="overlay-content">
                     <h3>Бронирование подтверждено!</h3>
                     <p id="confirmation-message">Спасибо! Ваше бронирование получено. Мы свяжемся с вами в ближайшее время для подтверждения.</p>
+                    <button id="save-to-calendar">Сохранить в календарь</button>
                     <button id="close-overlay">Закрыть</button>
                 </div>
             </div>
