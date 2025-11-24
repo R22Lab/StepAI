@@ -404,6 +404,33 @@ body {
     margin-left: 3px;
 }
 
+/* Input wrapper for validation icons */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.validation-icon {
+    position: absolute;
+    right: 15px;
+    font-size: 1.2rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.validation-icon.valid {
+    color: #388e3c;
+    opacity: 1;
+}
+
+.validation-icon.invalid {
+    color: #d32f2f;
+    opacity: 1;
+}
+
 .form-group input,
 .form-group select {
     width: 100%;
@@ -418,6 +445,7 @@ body {
     box-sizing: border-box;
     position: relative;
     z-index: 1;
+    padding-right: 40px; /* Make space for validation icons */
 }
 
 .form-group input::placeholder,
@@ -453,6 +481,9 @@ button {
     overflow: hidden;
     z-index: 1;
     animation: gradientShift 3s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 button::before {
@@ -487,6 +518,25 @@ button:disabled {
     box-shadow: 0 5px 15px rgba(57, 73, 171, 0.3);
 }
 
+button:hover {
+    background: linear-gradient(135deg, #5c6bc0, #3949ab, #5c6bc0);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(57, 73, 171, 0.5);
+    animation: gradientShift 2s ease infinite;
+}
+
+button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(57, 73, 171, 0.4);
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 5px 15px rgba(57, 73, 171, 0.3);
+}
+
 /* Form validation styles */
 .form-group.error input,
 .form-group.error select {
@@ -500,6 +550,93 @@ button:disabled {
     border-color: #388e3c !important;
     background-color: rgba(76, 175, 80, 0.08) !important;
     box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.2) !important;
+}
+
+/* Progress bar styles */
+.progress-container {
+    margin-bottom: 2rem;
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.8rem;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3949ab, #5c6bc0);
+    width: 0%;
+    transition: width 0.4s ease;
+}
+
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #78909c;
+}
+
+.progress-label {
+    flex: 1;
+    text-align: center;
+    padding: 0 5px;
+    transition: color 0.3s ease;
+}
+
+.progress-label.active {
+    color: #3949ab;
+    font-weight: 600;
+}
+
+/* Booking preview styles */
+.booking-preview {
+    background: rgba(92, 107, 192, 0.08);
+    border: 1px solid rgba(92, 107, 192, 0.2);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin: 1.5rem 0;
+    display: none; /* Initially hidden */
+}
+
+.booking-preview h4 {
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    color: #1a237e;
+    font-size: 1.1rem;
+}
+
+.booking-preview p {
+    margin: 0.4rem 0;
+    font-size: 0.95rem;
+}
+
+.booking-preview span {
+    color: #3949ab;
+    font-weight: 500;
+}
+
+/* Loading spinner */
+.loading-spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    margin-left: 10px;
+}
+
+button.loading .loading-spinner {
+    display: inline-block;
+}
+
+button.loading .btn-text {
+    opacity: 0.7;
 }
 
 .form-error-message {
